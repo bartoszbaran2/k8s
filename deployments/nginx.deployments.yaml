@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-nginx
+  labels:  # spięcie systemu
+    app: my-nginx
+spec:  # do deploymentu
+  replicas: 2
+  selector:
+    matchLabels:
+      app: my-nginx
+  template:  # jak mają powstać instancje
+    metadata:
+      labels:
+        app: my-nginx
+    spec:  # kontenera
+      containers:
+        - name: my-nginx
+          image: nginx:alpine
+          ports:
+            - containerPort: 80
+          resources:
+            limits:
+              memory: "128Mi"
+              cpu: "200m"
