@@ -4,8 +4,8 @@ metadata:
   name: nginx-clusterip
 spec:
   type: ClusterIP
-  selector:
+  selector:  # przypięcie serwisu do poda
     app: my-nginx
   ports:
-    - port: 80
-      targetPort: 80
+    - port: 80  # zew
+      targetPort: 80    # wew

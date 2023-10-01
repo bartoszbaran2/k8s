@@ -4,9 +4,9 @@ metadata:
   name: nginx-nodeport
 spec:
   type: NodePort
-  selector:
+  selector:  # przypięcie serwisu do poda
     app: my-nginx
   ports:
-    - port: 8080
-      targetPort: 80
-      nodePort: 30001
+    - port: 80  # zew
+      targetPort: 80    # wew
+      nodePort: 30001 # statyczny port noda
