@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: store-backend
+  namespace: backend
+  labels:
+    app: backend
+spec:
+  selector:
+    matchLabels:
+      app: backend
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: backend
+    spec:
+      initContainers:
+        - name: check-db
+          image: postgres
+          command: ['sh', '-c', 'until pg_isready -h postgres -p 5432;
+          do echo waiting for database: sleep 2; done;'] # host bo taki name w db-deploy
+      containers:
+        - name: backend
+          image: maxiking2/backend:v1
+          envFrom:
+            - configMapRef:
+                name: db-access
+          env:
+            - name: DB_CONNECTION_STRING
+              value: "postgresql://$(POSTGRES_USER):$(POSTGRES_PASSWORD)@postgres:5432/$(POSTGRES_DB)"
+          ports:
+            - containerPort: 8000

@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: adminer-svc
+spec:
+  type: LoadBalancer
+  selector:  # przypięcie serwisu do poda
+    app: db
+  ports:
+    - port: 8002 # zew
+      targetPort: 8080    # wew
