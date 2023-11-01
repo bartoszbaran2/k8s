@@ -1,0 +1,7 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: local-storage
+provisioner: kubernetes.io/no-provisioner
+reclaimPolicy: Retain  # volume i PV dzdzicza reclaim police z tąd
+volumeBindingMode: WaitForFirstConsumer

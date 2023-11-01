@@ -1,0 +1,25 @@
+# 2 kontenery połączone 1 volumen shareowanym między sobą
+# jeden folder modyfikuje plik w volumie
+apiVersion: v1
+kind: Pod
+metadata:
+  name: nginx-alpine-volume
+spec:
+  containers:
+    - name: nginx
+      image: nginx:alpine
+      volumeMounts:
+        - mountPath: /usr/share/nginx/html  # nginx robi get na plik z tej scieżki ale to jest zmontowane na volume emptydir
+          name: html
+          readOnly: true  # instancje nie mogą zapisywać w pliku
+    - name: html-updater
+      image: alpine
+      command: ["/bin/sh", "-c"]
+      args:
+        - while true; do date >> /html/index.html;sleep 10;done  # modyfikuje folder w volumie
+      volumeMounts:
+        - mountPath: /html  # to wskazuje na folder emptydir
+          name: html
+  volumes:
+    - name: html
+      emptyDir: { }  # stworzony volum jest folderem zmontowanym z /usr/share/nginx/html
