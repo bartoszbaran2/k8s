@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: green-deploy
+  name: green-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels: # szuka podów pasujących do app: z templates
+      app: nginx
+      role: green
+  template:
+    metadata:
+      labels:
+        app: nginx
+        role: green
+    spec:
+      containers:
+      - image: ckad:green
+        name: green
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 80 # z docker file
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"

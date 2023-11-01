@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: blue-deploy
+  name: blue-deploy
+spec:
+  replicas: 2
+  selector:
+    matchLabels: # szuka podów pasujących do app: z templates
+      app: nginx
+      role: blue
+  template:
+    metadata:
+      labels:
+        app: nginx
+        role: blue
+    spec:
+      containers:
+      - image: ckad:blue
+        name: blue
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 80 # z docker file
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"

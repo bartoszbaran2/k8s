@@ -1,0 +1,17 @@
+services:
+  stable:
+    container_name: stable
+    image: ckad:stable
+    build:
+      context: ./stable
+      dockerfile: stable.dockerfile
+    ports:
+      - 8000:80
+  canary:
+    container_name: canary
+    image: ckad:canary
+    build:
+      context: ./canary
+      dockerfile: canary.dockerfile
+    ports:
+      - 8001:80

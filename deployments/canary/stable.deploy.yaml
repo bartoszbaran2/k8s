@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: stable-deploy
+  name: stable-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels: # szuka podów pasujących do app: z templates
+      track: stable
+      app: customer-app
+  template:
+    metadata:
+      labels:
+        track: stable
+        app: customer-app
+    spec:
+      containers:
+      - image: ckad:stable
+        name: stable
+        imagePullPolicy: IfNotPresent
+        ports:
+          - containerPort: 80 # z docker file
+        resources:
+          limits:
+            memory: "128Mi"
+            cpu: "200m"

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: blue-test-service
+  labels:
+    env: blue
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx  # po tym szuka pod ow
+    role: blue
+  ports:
+    - port: 9000 # na zew.
+      targetPort: 80 # wew.

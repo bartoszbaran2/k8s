@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: green-test-service
+  labels:
+    env: green
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx  # po tym szuka pod ow
+    role: green
+  ports:
+    - port: 9001 # na zew.
+      targetPort: 80 # wew.

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: public-service
+  labels:
+    env: prod
+spec:
+  type: LoadBalancer
+  selector:
+    app: nginx  # po tym szuka pod ow
+    role: blue
+  ports:
+    - port: 80 # na zew.
+      targetPort: 80 # wew.
